@@ -4,7 +4,7 @@
 
 A Pure Alcohol Calculator is a web-based tool that allows you to calculate the amount of pure alcohol in a solution and determine how much heads, hearts, and tails to extract during distillation, with temperature correction.
 
-## Features
+## Features1
 
 - Calculate the amount of pure alcohol in a solution
 - Determine the quantities of heads, hearts, and tails to extract during distillation
