@@ -1,5 +1,5 @@
-const HEADS_PERCENTAGE = 10; // Default percentage of heads to take
-const DEFAULT_TEMPERATURE = 20; // Default temperature in Celsius
+const HEADS_PERCENTAGE = 10;
+const DEFAULT_TEMPERATURE = 20;
 const TEMPERATURE_CORRECTION_FACTOR = 0.33;
 const TAILS_PERCENTAGE = 20;
 
@@ -26,12 +26,10 @@ class PureAlcoholCalculator {
             this.calculate();
         });
 
-        // Add input change listeners to update results in real time
         this.addInputListeners();
     }
 
     addInputListeners() {
-        // Listen for input changes
         const inputs = [this.abvInput, this.volumeInput, this.percentageInput, this.temperatureInput, this.headsInput];
         inputs.forEach(input => {
             input.addEventListener("input", () => {
@@ -46,7 +44,6 @@ class PureAlcoholCalculator {
             const { Sa, Sh, S, Sw } = JSON.parse(results);
             this.updateResults(Sa, Sh, S, Sw);
         } else {
-            // Initialize to zero if no results are found
             this.updateResults(0, 0, 0, 0);
         }
     }
@@ -101,7 +98,6 @@ class PureAlcoholCalculator {
 
         this.updateResults(Sa, Sh, S, Sw);
 
-        // Update session storage with the latest values
         sessionStorage.setItem("alcoholResults", JSON.stringify({ Sa, Sh, S, Sw }));
         sessionStorage.setItem("inputValues", JSON.stringify({ abv: A, volume: V, percentage: F, temperature: T, heads: H }));
     }
@@ -136,7 +132,6 @@ class PureAlcoholCalculator {
         const roundedS = Math.round(S);
         const roundedSw = Math.round(Sw);
 
-        // Update the results in the HTML
         this.totalResult.innerText = `${roundedSa}`;
         this.headsResult.innerText = `${roundedSh}`;
         this.heartsResult.innerText = `${roundedS}`;
