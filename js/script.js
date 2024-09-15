@@ -16,13 +16,12 @@ class PureAlcoholCalculator {
         this.heartsResult = document.getElementById("heartsResult");
         this.tailsResult = document.getElementById("tailsResult");
 
-        // Load values and results
         this.loadInputValues();
         this.loadResults();
 
         const form = document.getElementById("pureAlcoholCalcForm");
         form.addEventListener("submit", (event) => {
-            event.preventDefault(); // Prevent the form from resetting
+            event.preventDefault();
             this.calculate();
         });
 
@@ -33,7 +32,7 @@ class PureAlcoholCalculator {
         const inputs = [this.abvInput, this.volumeInput, this.percentageInput, this.temperatureInput, this.headsInput];
         inputs.forEach(input => {
             input.addEventListener("input", () => {
-                this.calculate(); // Recalculate on input change
+                this.calculate();
             });
         });
     }
@@ -58,8 +57,7 @@ class PureAlcoholCalculator {
             this.temperatureInput.value = temperature || '';
             this.headsInput.value = heads || '';
         } else {
-            // Set default values if no inputs are found
-            this.abvInput.value = ''; // Optionally set a default value
+            this.abvInput.value = '';
             this.volumeInput.value = '';
             this.percentageInput.value = '';
             this.temperatureInput.value = DEFAULT_TEMPERATURE;
@@ -80,7 +78,6 @@ class PureAlcoholCalculator {
     calculate() {
         const { A, V, F, T, H } = this.getInputValues();
 
-        // Prevent calculations with invalid inputs
         if (A <= 0 || V <= 0) {
             this.updateResults(0, 0, 0, 0); // Reset results if inputs are invalid
             return;
@@ -88,7 +85,6 @@ class PureAlcoholCalculator {
 
         const correctedF = F - (TEMPERATURE_CORRECTION_FACTOR * (T - DEFAULT_TEMPERATURE));
 
-        // Calculate amounts
         const Sa = this.calculatePureAlcohol(V, correctedF);
         const Sh = this.calculateHeads(Sa, H);
         const St = this.calculateTails(Sa);
