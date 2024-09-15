@@ -1,62 +1,151 @@
-// Define constants
 const HEADS_PERCENTAGE = 10; // Default percentage of heads to take
 const DEFAULT_TEMPERATURE = 20; // Default temperature in Celsius
+const TEMPERATURE_CORRECTION_FACTOR = 0.33;
+const TAILS_PERCENTAGE = 20;
 
-// Get input elements
-const abvInput = document.getElementById("abv");
-const volumeInput = document.getElementById("volume");
-const percentageInput = document.getElementById("percentage");
-const temperatureInput = document.getElementById("temperature");
-const headsInput = document.getElementById("heads");
+class PureAlcoholCalculator {
+    constructor() {
+        this.abvInput = document.getElementById("abv");
+        this.volumeInput = document.getElementById("volume");
+        this.percentageInput = document.getElementById("percentage");
+        this.temperatureInput = document.getElementById("temperature");
+        this.headsInput = document.getElementById("heads");
+        this.resultDiv = document.getElementById("result");
+        this.totalResult = document.getElementById("totalResult");
+        this.headsResult = document.getElementById("headsResult");
+        this.heartsResult = document.getElementById("heartsResult");
+        this.tailsResult = document.getElementById("tailsResult");
 
-// Add event listener to calculate button
-const calculateButton = document.querySelector("button[type='submit']");
-calculateButton.addEventListener("click", PureAlcoholCalc);
+        // Load values and results
+        this.loadInputValues();
+        this.loadResults();
 
-function PureAlcoholCalc() {
-    // Get input values
-    const A = abvInput.value;
-    const V = volumeInput.value;
-    const F = percentageInput.value;
-    const T = temperatureInput.value || DEFAULT_TEMPERATURE;
-    const H = headsInput.value || HEADS_PERCENTAGE; // Use default if heads input is empty
+        const form = document.getElementById("pureAlcoholCalcForm");
+        form.addEventListener("submit", (event) => {
+            event.preventDefault(); // Prevent the form from resetting
+            this.calculate();
+        });
 
-    // Apply temperature correction to percentage of alcohol by volume (F)
-    const correctedF = F - (0.33 * (T - 20));
+        // Add input change listeners to update results in real time
+        this.addInputListeners();
+    }
 
-    // Calculate amount of pure alcohol (Sa)
-    const Sa = (V * correctedF) / 100;
+    addInputListeners() {
+        // Listen for input changes
+        const inputs = [this.abvInput, this.volumeInput, this.percentageInput, this.temperatureInput, this.headsInput];
+        inputs.forEach(input => {
+            input.addEventListener("input", () => {
+                this.calculate(); // Recalculate on input change
+            });
+        });
+    }
 
-    // Calculate amount of heads (Sh)
-    const Sh = (Sa * H) / 100;
+    loadResults() {
+        const results = sessionStorage.getItem("alcoholResults");
+        if (results) {
+            const { Sa, Sh, S, Sw } = JSON.parse(results);
+            this.updateResults(Sa, Sh, S, Sw);
+        } else {
+            // Initialize to zero if no results are found
+            this.updateResults(0, 0, 0, 0);
+        }
+    }
 
-    // Calculate amount of tails (St)
-    const St = (Sa * 20) / 100;
+    loadInputValues() {
+        const inputs = sessionStorage.getItem("inputValues");
+        if (inputs) {
+            const { abv, volume, percentage, temperature, heads } = JSON.parse(inputs);
+            this.abvInput.value = abv || '';
+            this.volumeInput.value = volume || '';
+            this.percentageInput.value = percentage || '';
+            this.temperatureInput.value = temperature || '';
+            this.headsInput.value = heads || '';
+        } else {
+            // Set default values if no inputs are found
+            this.abvInput.value = ''; // Optionally set a default value
+            this.volumeInput.value = '';
+            this.percentageInput.value = '';
+            this.temperatureInput.value = DEFAULT_TEMPERATURE;
+            this.headsInput.value = HEADS_PERCENTAGE;
+        }
+    }
 
-    // Calculate amount of hearts absolute(Sha)
-    const Sha = Sa - Sh - St;
+    getInputValues() {
+        const A = parseFloat(this.abvInput.value) || 0; // Default to 0 if NaN
+        const V = parseFloat(this.volumeInput.value) || 0; // Default to 0 if NaN
+        const F = parseFloat(this.percentageInput.value) || 0; // Default to 0 if NaN
+        const T = parseFloat(this.temperatureInput.value) || DEFAULT_TEMPERATURE; // Use default
+        const H = parseFloat(this.headsInput.value) || HEADS_PERCENTAGE; // Use default
 
-    // Calculate amount of hearts absolute(S)
-    const S = (Sha * 100) / (A);
+        return { A, V, F, T, H };
+    }
 
-    // Calculate amount of wash
-    const Sw = V - S - Sh;
+    calculate() {
+        const { A, V, F, T, H } = this.getInputValues();
 
-    // Round results
-    const roundedSa = Math.round(Sa);
-    const roundedSh = Math.round(Sh);
-    const roundedS = Math.round(S);
-    const roundedSw = Math.round(Sw);
+        // Prevent calculations with invalid inputs
+        if (A <= 0 || V <= 0) {
+            this.updateResults(0, 0, 0, 0); // Reset results if inputs are invalid
+            return;
+        }
 
-    // Show the results
-    const resultDiv = document.getElementById("result");
-    resultDiv.classList.remove("d-none");
-    const totalResult = document.getElementById("totalResult");
-    const headsResult = document.getElementById("headsResult");
-    const heartsResult = document.getElementById("heartsResult");
-    const tailsResult = document.getElementById("tailsResult");
-    totalResult.innerText = `${roundedSa}`;
-    headsResult.innerText = `${roundedSh}`;
-    heartsResult.innerText = `${roundedS}`;
-    tailsResult.innerText = `${roundedSw}`;
+        const correctedF = F - (TEMPERATURE_CORRECTION_FACTOR * (T - DEFAULT_TEMPERATURE));
+
+        // Calculate amounts
+        const Sa = this.calculatePureAlcohol(V, correctedF);
+        const Sh = this.calculateHeads(Sa, H);
+        const St = this.calculateTails(Sa);
+        const Sha = this.calculateHeartsAbsolute(Sa, Sh, St);
+        const S = this.calculateHearts(Sha, A);
+        const Sw = this.calculateWash(V, S, Sh);
+
+        this.updateResults(Sa, Sh, S, Sw);
+
+        // Update session storage with the latest values
+        sessionStorage.setItem("alcoholResults", JSON.stringify({ Sa, Sh, S, Sw }));
+        sessionStorage.setItem("inputValues", JSON.stringify({ abv: A, volume: V, percentage: F, temperature: T, heads: H }));
+    }
+
+    calculatePureAlcohol(V, correctedF) {
+        return (V * correctedF) / 100;
+    }
+
+    calculateHeads(Sa, H) {
+        return (Sa * H) / 100;
+    }
+
+    calculateTails(Sa) {
+        return (Sa * TAILS_PERCENTAGE) / 100;
+    }
+
+    calculateHeartsAbsolute(Sa, Sh, St) {
+        return Sa - Sh - St;
+    }
+
+    calculateHearts(Sha, A) {
+        return (Sha * 100) / A;
+    }
+
+    calculateWash(V, S, Sh) {
+        return V - S - Sh;
+    }
+
+    updateResults(Sa, Sh, S, Sw) {
+        const roundedSa = Math.round(Sa);
+        const roundedSh = Math.round(Sh);
+        const roundedS = Math.round(S);
+        const roundedSw = Math.round(Sw);
+
+        // Update the results in the HTML
+        this.totalResult.innerText = `${roundedSa}`;
+        this.headsResult.innerText = `${roundedSh}`;
+        this.heartsResult.innerText = `${roundedS}`;
+        this.tailsResult.innerText = `${roundedSw}`;
+
+        this.resultDiv.classList.remove("d-none");
+    }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    new PureAlcoholCalculator();
+});
