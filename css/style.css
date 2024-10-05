@@ -2,6 +2,7 @@ body {
     background-color: #f4f7fa;
     font-family: 'Helvetica Neue', Arial, sans-serif;
     color: #333;
+    overflow-x: hidden;
 }
 
 h1 {
@@ -62,7 +63,6 @@ button:hover {
     margin-bottom: 10px;
 }
 
-/* Responsive design for smaller screens */
 @media (max-width: 768px) {
     .form-group {
         flex-direction: column;
@@ -112,5 +112,14 @@ button:hover {
 
     h2 {
         font-size: 1rem;
+    }
+
+    .col-form-label {
+        font-size: 0.8rem;
+    }
+
+    .form-control {
+        font-size: 0.8rem;
+        height: 25px;
     }
 }
