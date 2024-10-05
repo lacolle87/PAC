@@ -30,10 +30,14 @@ class PureAlcoholCalculator {
 
     addInputListeners() {
         const inputs = [this.abvInput, this.volumeInput, this.percentageInput, this.temperatureInput, this.headsInput];
+
         inputs.forEach(input => {
             input.addEventListener("input", () => {
-                this.validateAndCorrectInput(input);
                 this.calculate();
+            });
+
+            input.addEventListener("blur", () => {
+                this.validateAndCorrectInput(input);
             });
         });
     }
@@ -42,7 +46,15 @@ class PureAlcoholCalculator {
         const min = parseFloat(input.min);
         const max = parseFloat(input.max);
         const step = parseFloat(input.step);
-        let value = parseFloat(input.value);
+        let value = input.value
+        console.log(value)
+
+        if (value === "") {
+            input.value = "";
+            return;
+        }
+
+        value = parseFloat(value);
 
         if (isNaN(value)) {
             value = input.placeholder ? parseFloat(input.placeholder) : min;
@@ -51,8 +63,9 @@ class PureAlcoholCalculator {
         if (value < min) value = min;
         if (value > max) value = max;
 
-        value = Math.round(value / step) * step;
+        value = Math.floor(value / step) * step;
         value = parseFloat(value.toFixed(1));
+
 
         if (input.value.length >= 2) {
             if (input.id === "abv") {
@@ -65,7 +78,7 @@ class PureAlcoholCalculator {
             if (input.id === "percentage") {
                 const abvValue = parseFloat(document.getElementById("abv").value);
                 if (value > abvValue) {
-                    document.getElementById("abv").value = value; // Adjust ABV to match percentage
+                    document.getElementById("abv").value = value;
                 }
             }
         }
