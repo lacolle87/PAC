@@ -2,6 +2,7 @@ const HEADS_PERCENTAGE = 10;
 const DEFAULT_TEMPERATURE = 20;
 const TEMPERATURE_CORRECTION_FACTOR = 0.33;
 const TAILS_PERCENTAGE = 20;
+const ZERO = 0;
 
 class PureAlcoholCalculator {
     constructor() {
@@ -121,11 +122,11 @@ class PureAlcoholCalculator {
     }
 
     getInputValues() {
-        const A = parseFloat(this.abvInput.value) || 0; // Default to 0 if NaN
-        const V = parseFloat(this.volumeInput.value) || 0; // Default to 0 if NaN
-        const F = parseFloat(this.percentageInput.value) || 0; // Default to 0 if NaN
-        const T = parseFloat(this.temperatureInput.value) || DEFAULT_TEMPERATURE; // Use default
-        const H = parseFloat(this.headsInput.value) || HEADS_PERCENTAGE; // Use default
+        const A = parseFloat(this.abvInput.value) || ZERO;
+        const V = parseFloat(this.volumeInput.value) || ZERO;
+        const F = parseFloat(this.percentageInput.value) || ZERO;
+        const T = parseFloat(this.temperatureInput.value) || DEFAULT_TEMPERATURE;
+        const H = parseFloat(this.headsInput.value) || HEADS_PERCENTAGE;
 
         return { A, V, F, T, H };
     }
@@ -134,7 +135,7 @@ class PureAlcoholCalculator {
         const { A, V, F, T, H } = this.getInputValues();
 
         if (A <= 0 || V <= 0) {
-            this.updateResults(0, 0, 0, 0); // Reset results if inputs are invalid
+            this.updateResults(0, 0, 0, 0);
             return;
         }
 
