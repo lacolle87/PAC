@@ -30,10 +30,17 @@ class PureAlcoholCalculator {
 
     addInputListeners() {
         const inputs = [this.abvInput, this.volumeInput, this.percentageInput, this.temperatureInput, this.headsInput];
-
         inputs.forEach(input => {
             input.addEventListener("input", () => {
                 this.calculate();
+            });
+
+            input.addEventListener("keydown", (event) => {
+                if (event.key === "Enter") {
+                    this.validateAndCorrectInput(input);
+                    event.preventDefault();
+                    input.blur();
+                }
             });
 
             input.addEventListener("blur", () => {
@@ -47,7 +54,6 @@ class PureAlcoholCalculator {
         const max = parseFloat(input.max);
         const step = parseFloat(input.step);
         let value = input.value
-        console.log(value)
 
         if (value === "") {
             input.value = "";
@@ -63,7 +69,7 @@ class PureAlcoholCalculator {
         if (value < min) value = min;
         if (value > max) value = max;
 
-        value = Math.floor(value / step) * step;
+        value = Math.round(value / step) * step;
         value = parseFloat(value.toFixed(1));
 
 
