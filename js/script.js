@@ -20,12 +20,6 @@ class PureAlcoholCalculator {
         this.loadInputValues();
         this.loadResults();
 
-        const form = document.getElementById("pureAlcoholCalcForm");
-        form.addEventListener("submit", (event) => {
-            event.preventDefault();
-            this.calculate();
-        });
-
         this.addInputListeners();
     }
 
