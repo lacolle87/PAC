@@ -1,0 +1,116 @@
+body {
+    background-color: #f4f7fa;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #333;
+}
+
+h1 {
+    color: #004085;
+    text-align: left;
+}
+
+h2 {
+    color: #0056b3;
+    font-size: 1.5rem;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #495057;
+}
+
+.form-control {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    box-shadow: none;
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #fff;
+    color: #495057;
+}
+
+.form-control:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 85, 179, 0.25);
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#result {
+    background-color: #f9fdff;
+    border: 1px solid #b8daff;
+    color: #004085;
+}
+
+#result strong {
+    color: #004085;
+}
+
+#result p {
+    margin-bottom: 10px;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-group label {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .form-group .col-sm-2 {
+        width: 100%;
+    }
+
+    .form-group .form-control {
+        width: 100%;
+    }
+
+    #result {
+        width: 100%;
+        margin: 0;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .col-md-10 {
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
+}
