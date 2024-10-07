@@ -18,6 +18,8 @@
     "gulp-sourcemaps": "^3.0.0"
   },
   "dependencies": {
-    "gulp-clean-css": "^4.3.0"
+    "bootstrap": "^5.3.3",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-uglify": "^3.0.2"
   }
 }

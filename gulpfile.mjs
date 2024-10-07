@@ -5,12 +5,13 @@ import cleanCSS from 'gulp-clean-css';
 import sourcemaps from 'gulp-sourcemaps';
 import rename from 'gulp-rename';
 import clean from 'gulp-clean';
+import uglify from 'gulp-uglify';
 
 const paths = {
     html: '*.html',
     css: [
-        'node_modules/bootstrap/dist/css/bootstrap.min.css', // Bootstrap CSS
-        'css/style.css' // Your custom CSS
+        'node_modules/bootstrap/dist/css/bootstrap.min.css',
+        'css/style.css'
     ],
     js: 'js/*.js',
     dist: 'dist/'
@@ -30,21 +31,22 @@ export const html = () => {
 export const css = () => {
     return gulp.src(paths.css)
         .pipe(sourcemaps.init())
-        .pipe(concat('styles.css')) // Combine CSS files into styles.css
+        .pipe(concat('styles.css'))
         .pipe(cleanCSS({
-            level: 2, // Use level 2 to remove comments and unnecessary spaces
-            compatibility: 'ie8' // Maintain compatibility
+            level: 2,
+            compatibility: 'ie8'
         }))
-        .pipe(rename({ suffix: '.min' })) // Rename to styles.min.css
-        .pipe(sourcemaps.write('.')) // Write sourcemaps
-        .pipe(gulp.dest(`${paths.dist}css`)); // Output to dist/css/
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(`${paths.dist}css`))
 };
 
 export const js = () => {
     return gulp.src(paths.js)
         .pipe(sourcemaps.init())
         .pipe(concat('main.js'))
-        .pipe(rename({ suffix: '.min' })) // Rename for minified output
+        .pipe(uglify())
+        .pipe(rename({ suffix: '.min' }))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(`${paths.dist}js`));
 };
