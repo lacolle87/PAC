@@ -1,0 +1,138 @@
+$body-bg: #f4f7fa;
+$primary-color: #004085;
+$secondary-color: #0056b3;
+$form-group-label-color: #495057;
+$form-control-border: #ced4da;
+$form-control-bg: #fff;
+$button-bg: #007bff;
+$button-hover-bg: #0056b3;
+$result-bg: #f9fdff;
+$result-border: #b8daff;
+
+html body {
+    background-color: $body-bg;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #333;
+    overflow-x: hidden;
+
+    h1 {
+        color: $primary-color;
+        text-align: left;
+    }
+
+    h2 {
+        color: $secondary-color;
+        font-size: 1.5rem;
+    }
+}
+
+.form-group {
+    label {
+        font-weight: bold;
+        color: $form-group-label-color;
+    }
+
+    .form-control {
+        border: 1px solid $form-control-border;
+        border-radius: 0.25rem;
+        box-shadow: none;
+        padding: 10px;
+        font-size: 1rem;
+        background-color: $form-control-bg;
+        color: $form-group-label-color;
+
+        &:focus {
+            border-color: $secondary-color;
+            box-shadow: 0 0 5px rgba(0, 85, 179, 0.25);
+        }
+    }
+}
+
+button {
+    background-color: $button-bg;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $button-hover-bg;
+    }
+}
+
+#result {
+    background-color: $result-bg;
+    border: 1px solid $result-border;
+    color: $primary-color;
+
+    strong {
+        color: $primary-color;
+    }
+
+    p {
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+
+        label {
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        .col-sm-2 {
+            width: 100%;
+        }
+
+        .form-control {
+            width: 100%;
+        }
+    }
+
+    #result {
+        width: 100%;
+        margin: 0;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .col-md-10 {
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
+
+    .col-form-label {
+        font-size: 0.8rem;
+    }
+
+    .form-control {
+        font-size: 0.8rem;
+        height: 25px;
+    }
+}

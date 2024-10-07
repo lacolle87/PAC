@@ -7,3 +7,6 @@
 /node_modules/
 /dist/
 package-lock.json
+/scss/style.css
+/scss/style.css.map
+/.idea/watcherTasks.xml
