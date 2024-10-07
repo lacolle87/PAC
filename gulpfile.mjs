@@ -50,7 +50,7 @@ export const sassTask = () => {
 export const css = () => {
     return gulp.src(paths.css)
         .pipe(sourcemaps.init())
-        .pipe(cleanCSS({ level: 2, compatibility: 'ie8' }))
+        .pipe(cleanCSS({ compatibility: 'ie8' }))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(`${paths.dist}css`))
 };
