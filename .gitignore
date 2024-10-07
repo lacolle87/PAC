@@ -6,3 +6,4 @@
 /.idea/pac.iml
 /node_modules/
 /dist/
+package-lock.json
