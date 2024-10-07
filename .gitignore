@@ -4,3 +4,5 @@
 /.idea/workspace.xml
 /.idea/.gitignore
 /.idea/pac.iml
+/node_modules/
+/dist/
