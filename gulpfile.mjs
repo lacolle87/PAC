@@ -8,6 +8,7 @@ import clean from 'gulp-clean';
 import uglify from 'gulp-uglify';
 import browserSync from 'browser-sync';
 import sass from 'gulp-dart-sass';
+import ts from 'gulp-typescript';
 
 const server = browserSync.create();
 
@@ -18,6 +19,7 @@ const paths = {
         'node_modules/bootstrap/dist/css/bootstrap.min.css',
     ],
     js: 'js/*.js',
+    ts: 'ts/*.ts',
     dist: 'dist/'
 };
 
@@ -58,7 +60,19 @@ export const css = () => {
 export const js = () => {
     return gulp.src(paths.js)
         .pipe(sourcemaps.init())
-        .pipe(concat('main.js'))
+        .pipe(concat('bootstrap.js'))
+        .pipe(uglify())
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(`${paths.dist}js`))
+        .pipe(server.stream());
+};
+
+export const tsTask = () => {
+    const tsProject = ts.createProject('tsconfig.json');
+    return gulp.src(paths.ts)
+        .pipe(sourcemaps.init())
+        .pipe(tsProject())
         .pipe(uglify())
         .pipe(rename({ suffix: '.min' }))
         .pipe(sourcemaps.write('.'))
@@ -77,8 +91,9 @@ export const serve = () => {
     gulp.watch(paths.html, html);
     gulp.watch(paths.sass, sassTask);
     gulp.watch(paths.js, js);
+    gulp.watch(paths.ts, tsTask);
 };
 
-const build = gulp.series(cleanDist, gulp.parallel(html, sassTask, css, js), serve);
+const build = gulp.series(cleanDist, gulp.parallel(html, sassTask, css, js, tsTask), serve);
 
 export default build;

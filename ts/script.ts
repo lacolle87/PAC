@@ -5,17 +5,28 @@ const TAILS_PERCENTAGE = 20;
 const ZERO = 0;
 
 class PureAlcoholCalculator {
+    abvInput: HTMLInputElement;
+    volumeInput: HTMLInputElement;
+    percentageInput: HTMLInputElement;
+    temperatureInput: HTMLInputElement;
+    headsInput: HTMLInputElement;
+    resultDiv: HTMLElement;
+    totalResult: HTMLElement;
+    headsResult: HTMLElement;
+    heartsResult: HTMLElement;
+    tailsResult: HTMLElement;
+
     constructor() {
-        this.abvInput = document.getElementById("abv");
-        this.volumeInput = document.getElementById("volume");
-        this.percentageInput = document.getElementById("percentage");
-        this.temperatureInput = document.getElementById("temperature");
-        this.headsInput = document.getElementById("heads");
-        this.resultDiv = document.getElementById("result");
-        this.totalResult = document.getElementById("totalResult");
-        this.headsResult = document.getElementById("headsResult");
-        this.heartsResult = document.getElementById("heartsResult");
-        this.tailsResult = document.getElementById("tailsResult");
+        this.abvInput = document.getElementById("abv") as HTMLInputElement;
+        this.volumeInput = document.getElementById("volume") as HTMLInputElement;
+        this.percentageInput = document.getElementById("percentage") as HTMLInputElement;
+        this.temperatureInput = document.getElementById("temperature") as HTMLInputElement;
+        this.headsInput = document.getElementById("heads") as HTMLInputElement;
+        this.resultDiv = document.getElementById("result") as HTMLElement;
+        this.totalResult = document.getElementById("totalResult") as HTMLElement;
+        this.headsResult = document.getElementById("headsResult") as HTMLElement;
+        this.heartsResult = document.getElementById("heartsResult") as HTMLElement;
+        this.tailsResult = document.getElementById("tailsResult") as HTMLElement;
 
         this.loadInputValues();
         this.loadResults();
@@ -30,7 +41,7 @@ class PureAlcoholCalculator {
                 this.calculate();
             });
 
-            input.addEventListener("keydown", (event) => {
+            input.addEventListener("keydown", (event: KeyboardEvent) => {
                 if (event.key === "Enter") {
                     this.validateAndCorrectInput(input);
                     event.preventDefault();
@@ -44,47 +55,47 @@ class PureAlcoholCalculator {
         });
     }
 
-    validateAndCorrectInput(input) {
+    validateAndCorrectInput(input: HTMLInputElement) {
         const min = parseFloat(input.min);
         const max = parseFloat(input.max);
         const step = parseFloat(input.step);
-        let value = input.value
+        let value = input.value;
 
         if (value === "") {
             input.value = "";
             return;
         }
 
-        value = parseFloat(value);
+        value = parseFloat(value).toString();
 
-        if (isNaN(value)) {
-            value = input.placeholder ? parseFloat(input.placeholder) : min;
+        if (isNaN(parseFloat(value))) {
+            value = input.placeholder ? parseFloat(input.placeholder).toString() : min.toString();
         }
 
-        if (value < min) value = min;
-        if (value > max) value = max;
+        let numericValue = parseFloat(value);
+        if (numericValue < min) numericValue = min;
+        if (numericValue > max) numericValue = max;
 
-        value = Math.round(value / step) * step;
-        value = parseFloat(value.toFixed(1));
-
+        numericValue = Math.round(numericValue / step) * step;
+        numericValue = parseFloat(numericValue.toFixed(1));
 
         if (input.value.length >= 2) {
             if (input.id === "abv") {
-                const percentageValue = parseFloat(document.getElementById("percentage").value);
-                if (value < percentageValue) {
-                    value = percentageValue;
+                const percentageValue = parseFloat(this.percentageInput.value);
+                if (numericValue < percentageValue) {
+                    numericValue = percentageValue;
                 }
             }
 
             if (input.id === "percentage") {
-                const abvValue = parseFloat(document.getElementById("abv").value);
-                if (value > abvValue) {
-                    document.getElementById("abv").value = value;
+                const abvValue = parseFloat(this.abvInput.value);
+                if (numericValue > abvValue) {
+                    this.abvInput.value = numericValue.toString();
                 }
             }
         }
 
-        input.value = value.toString();
+        input.value = numericValue.toString();
     }
 
     loadResults() {
@@ -110,8 +121,8 @@ class PureAlcoholCalculator {
             this.abvInput.value = '';
             this.volumeInput.value = '';
             this.percentageInput.value = '';
-            this.temperatureInput.value = DEFAULT_TEMPERATURE;
-            this.headsInput.value = HEADS_PERCENTAGE;
+            this.temperatureInput.value = DEFAULT_TEMPERATURE.toString();
+            this.headsInput.value = HEADS_PERCENTAGE.toString();
         }
     }
 
@@ -148,31 +159,31 @@ class PureAlcoholCalculator {
         sessionStorage.setItem("inputValues", JSON.stringify({ abv: A, volume: V, percentage: F, temperature: T, heads: H }));
     }
 
-    calculatePureAlcohol(V, correctedF) {
+    calculatePureAlcohol(V: number, correctedF: number): number {
         return (V * correctedF) / 100;
     }
 
-    calculateHeads(Sa, H) {
+    calculateHeads(Sa: number, H: number): number {
         return (Sa * H) / 100;
     }
 
-    calculateTails(Sa) {
+    calculateTails(Sa: number): number {
         return (Sa * TAILS_PERCENTAGE) / 100;
     }
 
-    calculateHeartsAbsolute(Sa, Sh, St) {
+    calculateHeartsAbsolute(Sa: number, Sh: number, St: number): number {
         return Sa - Sh - St;
     }
 
-    calculateHearts(Sha, A) {
+    calculateHearts(Sha: number, A: number): number {
         return (Sha * 100) / A;
     }
 
-    calculateWash(V, S, Sh) {
+    calculateWash(V: number, S: number, Sh: number): number {
         return V - S - Sh;
     }
 
-    updateResults(Sa, Sh, S, Sw) {
+    updateResults(Sa: number, Sh: number, S: number, Sw: number) {
         const roundedSa = Math.round(Sa);
         const roundedSh = Math.round(Sh);
         const roundedS = Math.round(S);
