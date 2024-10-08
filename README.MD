@@ -15,7 +15,7 @@ A Pure Alcohol Calculator is a web-based tool that allows you to calculate the a
 
 To use the Pure Alcohol Calculator, follow these steps:
 
-1. Open the [Pure Alcohol Calculator](https://nitrojamrec.com/pac/) in your web browser.
+1. Open the [Pure Alcohol Calculator](https://nitrojamrec.ru/pac/) in your web browser.
 2. Fill in the required input fields:
    - **Volume of solution (ml)**: Enter the volume of the solution you are working with.
    - **ABV of solution**: Enter the Alcohol by Volume (ABV) of the solution.
