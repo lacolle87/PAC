@@ -15,10 +15,8 @@ const server = browserSync.create();
 const paths = {
     html: '*.html',
     sass: 'scss/*.scss',
-    css: [
-        'node_modules/bootstrap/dist/css/bootstrap.min.css',
-    ],
-    js: 'js/*.js',
+    css: 'node_modules/bootstrap/dist/css/bootstrap.min.css',
+    js: 'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
     ts: 'ts/*.ts',
     dist: 'dist/'
 };
