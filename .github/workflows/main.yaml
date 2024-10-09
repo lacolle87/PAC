@@ -48,10 +48,8 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           port: 22
-          sync: true
-          rsync: true
-          source: "dist/"
-          target: "/var/www/PAC"
+          script: |
+            rsync -avz --exclude='.git' ./dist/ ${username}@${host}:/var/www/PAC
 
   send_message:
     runs-on: ubuntu-latest
