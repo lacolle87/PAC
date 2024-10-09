@@ -24,7 +24,7 @@ jobs:
         run: gulp
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.4.2
         with:
           name: dist-files
           path: ./dist
@@ -35,7 +35,7 @@ jobs:
 
     steps:
       - name: Download build artifacts
-        uses: actions/download-artifact@v4.4.2
+        uses: actions/download-artifact@v4.1.8
         with:
           name: dist-files
           path: ./dist
