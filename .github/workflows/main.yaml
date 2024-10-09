@@ -40,16 +40,16 @@ jobs:
           name: dist-files
           path: ./dist
 
-      - name: Deploy to Server via SSH
-        uses: appleboy/ssh-action@master
+      - name: Deploy to Server via SCP
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.PRIVATE_KEY }}
-          passphrase: ${{ secrets.PASSPHRASE }}
           port: 22
-          script: |
-            rsync -avz ./dist/ ${username}@${host}:/var/www/PAC
+          source: "./dist/*"
+          target: "/var/www/PAC"
+          rm: true
 
   send_message:
     runs-on: ubuntu-latest
