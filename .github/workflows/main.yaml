@@ -49,7 +49,7 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           port: 22
           script: |
-            rsync -avz /dist/ /var/www/html
+            rsync -avz /dist/ /var/www/html/PAC
 
   send_message:
     runs-on: ubuntu-latest
