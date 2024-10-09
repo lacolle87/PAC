@@ -35,7 +35,7 @@ jobs:
 
     steps:
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.4.2
         with:
           name: dist-files
           path: ./dist
@@ -48,9 +48,8 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           port: 22
-          script: |
-            rm -rf /var/www/html/PAC
-            rsync -avz ./dist/ /var/www/html/PAC
+          source: "dist/*"
+          target: "/var/www/html/PAC"
 
   send_message:
     runs-on: ubuntu-latest
