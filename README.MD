@@ -32,8 +32,8 @@ To run the Pure Alcohol Calculator locally and use Gulp for development, follow 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/pure-alcohol-calculator.git
-   cd pure-alcohol-calculator
+   git clone https://github.com/lacolle87/PAC.git
+   cd PAC
    ```
 2. Install the required dependencies:
    ```bash
