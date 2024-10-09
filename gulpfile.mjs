@@ -52,8 +52,7 @@ export const css = () => {
     return gulp.src(paths.css)
         .pipe(sourcemaps.init())
         .pipe(uncss({
-            html: [paths.html],
-
+            html: [paths.html]
         }))
         .pipe(cleanCSS({ compatibility: 'ie8' }))
         .pipe(sourcemaps.write('.'))
