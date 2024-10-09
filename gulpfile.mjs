@@ -9,6 +9,7 @@ import uglify from 'gulp-uglify';
 import browserSync from 'browser-sync';
 import sass from 'gulp-dart-sass';
 import ts from 'gulp-typescript';
+import uncss from 'gulp-uncss';
 
 const server = browserSync.create();
 
@@ -50,9 +51,13 @@ export const sassTask = () => {
 export const css = () => {
     return gulp.src(paths.css)
         .pipe(sourcemaps.init())
+        .pipe(uncss({
+            html: [paths.html],
+
+        }))
         .pipe(cleanCSS({ compatibility: 'ie8' }))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(`${paths.dist}css`))
+        .pipe(gulp.dest(`${paths.dist}css`));
 };
 
 export const js = () => {
