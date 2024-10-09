@@ -19,12 +19,17 @@ html body {
     h1 {
         color: $primary-color;
         text-align: left;
+        padding-top: 25px;
     }
 
     h2 {
         color: $secondary-color;
         font-size: 1.5rem;
     }
+}
+
+.container{
+    display: block;
 }
 
 .form-group {
@@ -86,6 +91,14 @@ a {
     }
 }
 
+.result {
+    margin-top: 20px;
+}
+
+.footer {
+    margin-top: 20px;
+}
+
 @media (max-width: 768px) {
     .form-group {
         flex-direction: column;
@@ -117,6 +130,10 @@ a {
     h2 {
         font-size: 1.25rem;
     }
+
+    .last {
+        margin-bottom: 25px;
+    }
 }
 
 @media (max-width: 576px) {
@@ -144,5 +161,9 @@ a {
     .form-control {
         font-size: 0.8rem;
         height: 25px;
+    }
+
+    .last {
+        margin-bottom: 20px;
     }
 }

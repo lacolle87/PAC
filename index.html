@@ -14,7 +14,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="container py-5">
+<div class="container pb-5">
     <h1>Pure Alcohol Calculator</h1>
     <div class="row">
         <div class="col-md-10">
@@ -47,13 +47,13 @@
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label" for="heads">Percentage of heads to take:</label>
                     <div class="col-sm-2">
-                        <input class="form-control" id="heads" name="heads" placeholder="10" type="number" min="1" max="20" step="0.1">
+                        <input class="form-control last" id="heads" name="heads" placeholder="10" type="number" min="1" max="20" step="0.1">
                     </div>
                 </div>
             </form>
         </div>
         <div class="col-md-10">
-            <div class="border border-dark rounded mt-5 p-3 col-md-6 d-none" id="result">
+            <div class="border border-dark rounded p-3 col-md-6 d-none result" id="result">
                 <h2 class="mb-4">Results:</h2>
                 <p class="mb-0"><strong>Pure alcohol:</strong> <span id="totalResult">0</span> ml</p>
                 <p class="mb-0"><strong>Heads:</strong> <span id="headsResult">0</span> ml</p>
@@ -62,10 +62,11 @@
             </div>
         </div>
     </div>
+    <footer class="footer">
+        <p>&copy; <span id="currentYear"></span> <a href="https://github.com/lacolle87/PAC">GitHub Repository</a>. All rights reserved.</p>
+    </footer>
 </div>
-<footer class="text-center mt-5">
-    <p>&copy; <span id="currentYear"></span> <a href="https://github.com/lacolle87/PAC">GitHub Repository</a>. All rights reserved.</p>
-</footer>
+
 <script src="js/bootstrap.min.js"></script>
 <script src="js/script.min.js"></script>
 <script src="js/year.min.js"></script>
