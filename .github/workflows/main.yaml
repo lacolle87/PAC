@@ -38,7 +38,7 @@ jobs:
         uses: actions/download-artifact@v4.1.8
         with:
           name: dist-files
-          path: .
+          path: ./PAC
 
       - name: Deploy to Server via SCP
         uses: appleboy/scp-action@v0.1.7
@@ -48,7 +48,7 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           port: 22
-          source: "./dist/*"
+          source: "./PAC/*"
           target: "/var/www/PAC"
           rm: true
 
