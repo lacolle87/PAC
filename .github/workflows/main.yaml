@@ -48,7 +48,9 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           port: 22
-          source: "dist/*"
+          sync: true
+          rsync: true
+          source: "dist/"
           target: "/var/www/PAC"
 
   send_message:
