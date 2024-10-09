@@ -48,7 +48,7 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           port: 22
-          source: "./dist/*"
+          source: "./dist/dist/*"
           target: "/var/www/PAC"
           rm: true
 
