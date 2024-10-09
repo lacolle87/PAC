@@ -49,7 +49,7 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           port: 22
           script: |
-            rsync -avz --exclude='.git' ./dist/ ${username}@${host}:/var/www/PAC
+            rsync -avz ./dist/ ${username}@${host}:/var/www/PAC
 
   send_message:
     runs-on: ubuntu-latest
