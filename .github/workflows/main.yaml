@@ -46,6 +46,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.PRIVATE_KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
           port: 22
           source: "./dist/*"
           target: "/var/www/PAC"
