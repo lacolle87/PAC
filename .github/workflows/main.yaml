@@ -49,7 +49,7 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           port: 22
           source: "./pac/*"
-          target: "/var/www"
+          target: "/var/www/html"
           rm: true
 
   send_message:
