@@ -8,6 +8,7 @@ $button-bg: #007bff;
 $button-hover-bg: #0056b3;
 $result-bg: #f9fdff;
 $result-border: #b8daff;
+$black: #333;
 
 html body {
     background-color: $body-bg;
@@ -73,6 +74,15 @@ button {
 
     p {
         margin-bottom: 10px;
+    }
+}
+
+a {
+    color: $black !important;
+    text-decoration: none !important;
+
+    &:hover {
+        text-decoration: underline !important;
     }
 }
 
