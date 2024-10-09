@@ -92,6 +92,8 @@ export const serve = () => {
     gulp.watch(paths.ts, tsTask);
 };
 
-const build = gulp.series(cleanDist, gulp.parallel(html, sassTask, css, js, tsTask), serve);
+export const build = gulp.series(cleanDist, gulp.parallel(html, sassTask, css, js, tsTask));
+
+export const run = gulp.series(build, serve);
 
 export default build;
