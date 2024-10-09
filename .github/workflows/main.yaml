@@ -27,7 +27,7 @@ jobs:
         uses: actions/upload-artifact@v4.4.2
         with:
           name: dist-files
-          path: ./dist
+          path: ./dist/dist
 
   deploy:
     runs-on: ubuntu-latest
@@ -48,7 +48,7 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           port: 22
-          source: "./dist/dist/*"
+          source: "./dist/*"
           target: "/var/www/PAC"
           rm: true
 
