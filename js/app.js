@@ -1,29 +1,4 @@
-const AppHeader = {
-    template: `
-        <header class="header">
-            <h1>Pure Alcohol Calculator</h1>
-        </header>
-    `
-};
-
-const AppFooter = {
-    template: `
-        <footer class="footer">
-            <p>&copy; {{ currentYear }} <a href="https://github.com/lacolle87/PAC">GitHub Repository</a>. All rights reserved.</p>
-        </footer>
-    `,
-    data() {
-        return {
-            currentYear: new Date().getFullYear()
-        };
-    }
-};
-
 const App = {
-    components: {
-        AppHeader,
-        AppFooter
-    },
     data() {
         return {
             fields: [
