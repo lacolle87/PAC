@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Pure Alcohol Calculator</title>
-    <meta content="Use this tool to calculate the amount of pure alcohol in a solution and determine how much heads, hearts, and tails to extract during distillation, with temperature correction."
-          name="description">
-    <meta content="2024, pure alcohol, calculator, temperature correction, distillation, spirits, liquor, ABV"
-          name="keywords">
+    <meta content="Use this tool to calculate the amount of pure alcohol in a solution and determine how much heads, hearts, and tails to extract during distillation, with temperature correction." name="description">
+    <meta content="2024, pure alcohol, calculator, temperature correction, distillation, spirits, liquor, ABV" name="keywords">
     <meta content="NJ" name="NJ">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link href="https://nitrojamrec.ru/pac/" rel="canonical">
@@ -14,40 +12,24 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="container pb-5">
+<div class="container pb-5" id="app">
     <h1>Pure Alcohol Calculator</h1>
     <div class="row">
         <div class="col-md-10">
             <form id="pureAlcoholCalcForm">
-                <div class="form-group row">
-                    <label class="col-sm-4 col-form-label" for="volume">Volume of solution (ml):</label>
+                <div class="form-group row" v-for="field in fields" :key="field.id">
+                    <label :class="'col-sm-4 col-form-label'" :for="field.id">{{ field.label }}</label>
                     <div class="col-sm-2">
-                        <input class="form-control" id="volume" name="volume" required type="number" min="1" step="1">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-sm-4 col-form-label" for="percentage">ABV of solution:</label>
-                    <div class="col-sm-2">
-                        <input class="form-control" id="percentage" name="percentage" required type="number" min="0" max="97" step="0.1">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-4 col-form-label" for="abv">Target ABV of hearts:</label>
-                    <div class="col-sm-2">
-                        <input class="form-control" id="abv" name="abv" required type="number" min="0" max="97" step="0.1">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-4 col-form-label" for="temperature">Temperature (&deg;C):</label>
-                    <div class="col-sm-2">
-                        <input class="form-control" id="temperature" name="temperature" placeholder="20" type="number" min="1" max="78" step="0.1">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-4 col-form-label" for="heads">Percentage of heads to take:</label>
-                    <div class="col-sm-2">
-                        <input class="form-control last" id="heads" name="heads" placeholder="10" type="number" min="1" max="20" step="0.1">
+                        <input class="form-control"
+                               :id="field.id"
+                               :name="field.id"
+                               v-model="field.value"
+                               :required="field.required"
+                               :type="field.type"
+                               :min="field.min"
+                               :max="field.max"
+                               :step="field.step"
+                               :placeholder="field.placeholder">
                     </div>
                 </div>
             </form>
@@ -55,10 +37,7 @@
         <div class="col-md-10">
             <div class="border border-dark rounded p-3 col-md-6 d-none result" id="result">
                 <h2 class="mb-4">Results:</h2>
-                <p class="mb-0"><strong>Pure alcohol:</strong> <span id="totalResult">0</span> ml</p>
-                <p class="mb-0"><strong>Heads:</strong> <span id="headsResult">0</span> ml</p>
-                <p class="mb-0"><strong>Hearts:</strong> <span id="heartsResult">0</span> ml</p>
-                <p class="mb-0"><strong>Tails:</strong> <span id="tailsResult">0</span> ml</p>
+                <p class="mb-0" v-for="result in results" :key="result.id"><strong>{{ result.label }}:</strong> <span :id="result.id">{{ result.value }}</span> ml</p>
             </div>
         </div>
     </div>
@@ -67,8 +46,29 @@
     </footer>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/script.min.js"></script>
 <script src="js/year.min.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            fields: [
+                { id: 'volume', label: 'Volume of solution (ml):', value: null, min: 1, step: 1, required: true, type: 'number' },
+                { id: 'percentage', label: 'ABV of solution:', value: null, min: 0, max: 97, step: 0.1, required: true, type: 'number' },
+                { id: 'abv', label: 'Target ABV of hearts:', value: null, min: 0, max: 97, step: 0.1, required: true, type: 'number' },
+                { id: 'temperature', label: 'Temperature (°C):', value: 20, min: 1, max: 78, step: 0.1, required: false, type: 'number', placeholder: '20' },
+                { id: 'heads', label: 'Percentage of heads to take:', value: 10, min: 1, max: 20, step: 0.1, required: false, type: 'number', placeholder: '10' }
+            ],
+            results: [
+                { id: 'totalResult', label: 'Pure alcohol', value: 0 },
+                { id: 'headsResult', label: 'Heads', value: 0 },
+                { id: 'heartsResult', label: 'Hearts', value: 0 },
+                { id: 'tailsResult', label: 'Tails', value: 0 }
+            ]
+        }
+    });
+</script>
 </body>
 </html>
