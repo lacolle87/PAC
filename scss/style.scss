@@ -99,6 +99,11 @@ a {
     margin-top: 20px;
 }
 
+.form-control:hover {
+    border-color: $secondary-color;
+    box-shadow: 0 0 5px rgba(0, 85, 179, 0.25);
+}
+
 @media (max-width: 768px) {
     .form-group {
         flex-direction: column;

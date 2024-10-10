@@ -18,6 +18,8 @@ const paths = {
     sass: 'scss/*.scss',
     css: 'node_modules/bootstrap/dist/css/bootstrap.min.css',
     js: 'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
+    app: 'js/app.js',
+    vuejs: 'node_modules/vue/dist/vue.global.prod.js',
     ts: 'ts/*.ts',
     dist: 'dist/'
 };
@@ -62,7 +64,18 @@ export const css = () => {
 export const js = () => {
     return gulp.src(paths.js)
         .pipe(sourcemaps.init())
-        .pipe(concat('bootstrap.js'))
+        .pipe(concat('external.js'))
+        .pipe(uglify())
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(`${paths.dist}js`))
+        .pipe(server.stream());
+};
+
+export const app = () => {
+    return gulp.src(paths.app)
+        .pipe(sourcemaps.init())
+        .pipe(concat('app.js'))
         .pipe(uglify())
         .pipe(rename({ suffix: '.min' }))
         .pipe(sourcemaps.write('.'))
@@ -82,6 +95,11 @@ export const tsTask = () => {
         .pipe(server.stream());
 };
 
+export const copyVue = () => {
+    return gulp.src(paths.vuejs)
+        .pipe(gulp.dest(`${paths.dist}js`));
+};
+
 export const serve = () => {
     server.init({
         server: {
@@ -96,7 +114,7 @@ export const serve = () => {
     gulp.watch(paths.ts, tsTask);
 };
 
-export const build = gulp.series(cleanDist, gulp.parallel(html, sassTask, css, js, tsTask));
+export const build = gulp.series(cleanDist, gulp.parallel(html, sassTask, css, js, tsTask, copyVue, app));
 
 export const run = gulp.series(build, serve);
 
